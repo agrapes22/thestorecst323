@@ -11,39 +11,33 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    function home() {
-        return view('/home');
+    function store() {
+        return view('/store');
     }
 
     function loginPage() {
-        if(Session::has('error')) {
-            return redirect("home")->with(['loginForm'=>'login', 'error'=>Session::get('error')]);
-        }
-        return redirect("home")->with('loginForm','login');
+        return view('/login');
     }
 
     function registerPage() {
-        if(Session::has('error')) {
-            return redirect("home")->with(['registerForm'=>'register', 'error'=>Session::get('error')]);
-        }
-        return redirect("home")->with('registerForm', 'register');
+        return view('/register');
     }
 
-    function account() {
+    function dashboard() {
         if(!Auth::check()){
-            return redirect("home")->with('message', 'Please login first');
+            return redirect("store")->with('message', 'Please login first');
         }
-        return view('account')->with(['user'=>Auth::user()]);
+        return view('dashboard')->with(['user'=>Auth::user()]);
     }
 
-    function settingsPage() {
+    function profile() {
         if(!Auth::check()){
-            return redirect("home")->with('message', 'Please login first');
+            return redirect("store")->with('message', 'Please login first');
         }
         Session::put('error', Session::get('error'));
         Session::put('message', Session::get('message'));
 
-        return view('settings')->with(['user'=>Auth::user(), 'error'=>Session::get('error'), 'message'=>Session::get('message')]);
+        return view('profile')->with(['user'=>Auth::user(), 'error'=>Session::get('error'), 'message'=>Session::get('message')]);
     }
 
     function login(Request $request) {
@@ -54,16 +48,16 @@ class UserController extends Controller
 
         $userlogin = $request->only('username', 'password');
         if (Auth::attempt($userlogin)) {
-            return redirect()->intended('account')->withSuccess('Logged in');
+            return redirect()->intended('dashboard')->withSuccess('Logged in');
         }
         return redirect("login")->with('error','Login unsuccessful');
     }
 
-    function logout(Request $request) {
+    function signout(Request $request) {
         Session::flush();
         Auth::logout();
 
-        return redirect("home")->with('message', 'Logged out');
+        return redirect("store")->with('message', 'Logged out');
     }
 
     function register(Request $request) {
@@ -83,7 +77,7 @@ class UserController extends Controller
         Auth::login($user);
 
         if(Auth::check()) {
-            return redirect("account")->withSuccess('Signed in');
+            return redirect("dashboard")->withSuccess('Signed in');
 
         }
         return redirect("register")->with('error','Registration unsuccessful');
@@ -100,16 +94,16 @@ class UserController extends Controller
         {
             $validator = $request->validate(['oldpassword'=>'required', 'newpassword' => 'required']);
             if(!Hash::check($request->oldpassword, Auth::user()->getAuthPassword())) {
-                return redirect("settings")->with(['user'=>Auth::user(), 'error'=>'Incorrect password']);
+                return redirect("profile")->with(['user'=>Auth::user(), 'error'=>'Incorrect password']);
             }
             else if($request->newpassword === null) {
-                return redirect("settings")->with(['user'=>Auth::user(), 'error'=>'New password cannot be blank']);
+                return redirect("profile")->with(['user'=>Auth::user(), 'error'=>'New password cannot be blank']);
             }
             else if(Hash::check($request->newpassword, Auth::user()->getAuthPassword())) {
-                return redirect("settings")->with(['user'=>Auth::user(), 'error'=>'New password cannot be the same as old password']);
+                return redirect("profile")->with(['user'=>Auth::user(), 'error'=>'New password cannot be the same as old password']);
             }
             else if($request->oldpassword === $request->newpassword) {
-                return redirect("settings")->with(['user'=>Auth::user(), 'error'=>'New password cannot be the same as old password']);
+                return redirect("profile")->with(['user'=>Auth::user(), 'error'=>'New password cannot be the same as old password']);
             }
             else {
                 $newpassword = Hash::make($request->newpassword);
@@ -118,12 +112,12 @@ class UserController extends Controller
         }
 
         $user = Auth::user()->update($data);
-        return redirect("settings")->with('message','Account updated');
+        return redirect("profile")->with('message','Account updated');
     }
 
     function delete($id)
     {
         $u = User::where('id', $id)->firstorfail()->delete();
-        return redirect("home")->with('message','Account sucessfully deleted');
+        return redirect("store")->with('message','Account sucessfully deleted');
     }
 }

@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', [UserController::class, 'home']);
+Route::get('/store', [UserController::class, 'store']);
 
 Route::get('/login', [UserController::class, 'loginPage']);
 
@@ -28,11 +28,11 @@ Route::post('login', [UserController::class, 'login']);
 
 Route::post('register', [UserController::class, 'register']);
 
-Route::get('/logout', [UserController::class, 'logout']);
+Route::get('/signout', [UserController::class, 'signout']);
 
-Route::get('/account', [UserController::class, 'account']);
+Route::get('/dashboard', [UserController::class, 'dashboard']);
 
-Route::get('/settings', [UserController::class, 'settingsPage']);
+Route::get('/profile', [UserController::class, 'profile']);
 
 Route::post('updateAccount', [UserController::class, 'updateAccount']);
 
