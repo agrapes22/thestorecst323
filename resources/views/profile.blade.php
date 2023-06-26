@@ -18,34 +18,33 @@
                                 <div class="mb-3"><input class="form-control" type="password" id="newpasswordid" name="newpassword" placeholder="New Password"></div>
                                 <div><button class="btn btn-primary d-block w-100" type="submit">Update</button></div>
                             </form>
+                            <h2 class="text-center mb-4">Delete Account</h2>
+                            <form action="{{ url('/deleteAccount', ['id' => $user->id]) }}" method="POST">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+                                <button class="btn btn-primary d-block w-100" type="submit" onclick="return confirm('Are You Sure You Want To Delete Your Account?')">Delete</button>
+                            </form>
                         </div>
                     </div>
+                    @if(session()->has('error'))
+                    <div style="color:red">
+                        {{ session()->get('error')}}
+                    </div>
+                    @endif
+                    @if(session()->has('errors'))
+                    <div style="color:red">
+                        {{ implode('', $errors->all(':message')) }}
+                    </div>
+                    @endif
+                    @if(session()->has('message'))
+                    <div style="color:black">
+                        {{ session()->get('message')}}
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>
-    </section>
-            <h5 style="margin-top: 10px">Delete Account</h5>
-            <form action="{{ url('/deleteAccount', ['id' => $user->id]) }}" method="POST" style="border: 0px">
-                {{ csrf_field() }}
-                {{ method_field('DELETE') }}
-                <button type="submit" class="btn btn-danger" onclick="return confirm('Are You Sure You Want To Delete Your Account?')">Delete</button>
-            </form>
-        </div>
-        @if(session()->has('error'))
-         <div style="color:red">
-            {{ session()->get('error')}}
-         </div>
-        @endif
-        @if(session()->has('errors'))
-         <div style="color:red">
-            {{ implode('', $errors->all(':message')) }}
-         </div>
-        @endif
-        @if(session()->has('message'))
-         <div style="color:black">
-            {{ session()->get('message')}}
-         </div>
-        @endif
+        </section>   
         @endsection
     </body>
 </html>

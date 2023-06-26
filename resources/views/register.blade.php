@@ -27,6 +27,21 @@
                             </form>
                         </div>
                     </div>
+                    @if(session()->has('error'))
+                    <div style="color:red">
+                        {{ session()->get('error')}}
+                    </div>
+                    @endif
+                    @if(session()->has('errors'))
+                    <div style="color:red">
+                        {{ implode('', $errors->all(':message')) }}
+                    </div>
+                    @endif
+                    @if(session()->has('message'))
+                    <div style="color:black">
+                        {{ session()->get('message')}}
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>
