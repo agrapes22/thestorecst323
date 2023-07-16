@@ -31,9 +31,7 @@ while($row = mysqli_fetch_assoc($select_all_posts_query)){
 
     ?>
 
-<h1 class="page-header">
-                Page Heading
-                <small>Secondary Text</small>
+<h1 class="page-header">Content Review<small> Of Best courses</small>
             </h1>
 
             <!-- First Blog Post -->

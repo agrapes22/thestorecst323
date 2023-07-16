@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "undefined/subscriptions/17168939-c287-4eaa-9839-a78e3d7602bb/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/cmsActivity5",
+    "appService.deploySubpath": "."
+}

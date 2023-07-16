@@ -34,19 +34,14 @@
                         $cat_title = $row['cat_title'];
                         echo "<li><a href='#'>{$cat_title}</a></li>";
                     }
-
-
                 ?>
                             </ul>
                         </div>
                         <!-- /.col-lg-6 -->
-
-
                         <!-- /.col-lg-6 -->
                     </div>
                     <!-- /.row -->
                 </div>
-
                 <!-- Side Widget Well -->
         <?php
         include "widget.php";

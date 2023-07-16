@@ -2,7 +2,7 @@
 <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>KBirabwa Copyright &copy; Your Website 2023</p>
+                    <p>KBirabwa Copyright &copy;Website 2023</p>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
