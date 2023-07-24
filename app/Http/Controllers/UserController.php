@@ -14,6 +14,7 @@ class UserController extends Controller
     
     function store() {
         return view('/store');
+        //a change to trigger google cloud build
     }
 
     function loginPage() {
