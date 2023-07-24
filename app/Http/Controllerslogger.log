@@ -1,0 +1,3 @@
+[2023-07-24T04:59:56.675211+00:00] logger.INFO: UserController Auth failed at dashboard dashboard() [] []
+[2023-07-24T05:00:02.538737+00:00] logger.INFO: UserController Auth failed at dashboard dashboard() [] []
+[2023-07-24T05:00:31.448807+00:00] logger.INFO: UserController Auth failed at profile dashboard() [] []

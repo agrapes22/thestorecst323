@@ -7,10 +7,11 @@ use Illuminate\Support\Facades\Auth;
 use Hash;
 use Session;
 use App\Models\User;
-
+use App\Http\Controllers\LogController;
 
 class UserController extends Controller
 {
+    
     function store() {
         return view('/store');
     }
@@ -25,6 +26,7 @@ class UserController extends Controller
 
     function dashboard() {
         if(!Auth::check()){
+            (new LogController())->logMessage("Auth failed at dashboard", "UserController", "dashboard()", "INFO");
             return redirect("store")->with('message', 'Please login first');
         }
         return view('dashboard')->with(['user'=>Auth::user()]);
@@ -32,10 +34,12 @@ class UserController extends Controller
 
     function profile() {
         if(!Auth::check()){
+            (new LogController())->logMessage("Auth failed at profile", "UserController", "profile()", "INFO");
             return redirect("store")->with('message', 'Please login first');
         }
         Session::put('error', Session::get('error'));
         Session::put('message', Session::get('message'));
+        (new LogController())->logMessage(Session::get('error'), "UserController", "profile()", "ERROR");
 
         return view('profile')->with(['user'=>Auth::user(), 'error'=>Session::get('error'), 'message'=>Session::get('message')]);
     }
@@ -50,6 +54,7 @@ class UserController extends Controller
         if (Auth::attempt($userlogin)) {
             return redirect()->intended('dashboard')->withSuccess('Logged in');
         }
+        (new LogController())->logMessage("Auth failed at login", "UserController", "login()", "INFO");
         return redirect("login")->with('error','Login unsuccessful');
     }
 
@@ -57,6 +62,7 @@ class UserController extends Controller
         Session::flush();
         Auth::logout();
 
+        (new LogController())->logMessage("Logging out", "UserController", "signout()", "INFO");
         return redirect("store")->with('message', 'Logged out');
     }
 
@@ -80,6 +86,7 @@ class UserController extends Controller
             return redirect("dashboard")->withSuccess('Signed in');
 
         }
+        (new LogController())->logMessage("Create failed at register", "UserController", "register()", "INFO");
         return redirect("register")->with('error','Registration unsuccessful');
     }
 
@@ -118,6 +125,7 @@ class UserController extends Controller
     function delete($id)
     {
         $u = User::where('id', $id)->firstorfail()->delete();
+        (new LogController())->logMessage("Account deleted ".$id, "UserController", "delete()", "INFO");
         return redirect("store")->with('message','Account sucessfully deleted');
     }
 }
