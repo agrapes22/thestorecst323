@@ -9,7 +9,7 @@ foreach($db as $key => $value){
 }
 
 $connection =
-mysqli_connect('localhost', 'root','', 'cms');
+mysqli_connect('localhost', 'root','root', 'cms');
 /* if ($connection){
     echo "Database connected";
 }
